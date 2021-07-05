@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.min.css">
+</head>
+<body>
+    <section class="promo">
+        <div class="container">
+            <div class="promo-header">
+                <div class="promo-header__title">
+                    <img src="./assets/img/promo/Union.png" alt="union">
+                </div>
+                <a href="#" class="promo-header__contact">Partner with us</a>
+            </div>
+            <h1>High-End<br> Architectural rendering</h1>
+            <h3>Be the best - work with the best!</h3>
+            <button class="btn_red promo-header__contact_btn" type="button">Contact us</button>
+        </div>
+    </section>
+    <section class="service">
+        <div class="container">
+            <div class="title service-title">
+                Our Service
+            </div>
+            <div class="service-cards">
+                <div class="service-card flip-container">
+                    <div class="service-card__container flipper">
+                        <div class="service-card_main front">
+                            <div class="service-card__img">
+                                <img src="./assets/img/services/exterior.png" alt="exterior">
+                            </div>
+                            <div class="service-card__title">Exterior visualization</div>
+                        </div>
+                        <div class="service-card_swipe back">
+                            <div class="service-card__title">Exterior visualization</div>
+                            <div class="service-card__descr">In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.</div>
+                            <button class="btn_red service-card__btn">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card flip-container">
+                    <div class="service-card__container flipper">
+                        <div class="service-card_main front">
+                            <div class="service-card__img">
+                                <img src="./assets/img/services/interior.png" alt="interior">
+                            </div>
+                            <div class="service-card__title">Interior visualization</div>
+                        </div>
+                        <div class="service-card_swipe back"></div>
+                    </div>
+                </div>
+                <div class="service-card flip-container">
+                    <div class="service-card__container flipper">
+                        <div class="service-card_main front">
+                            <div class="service-card__img">
+                                <img src="./assets/img/services/video.png" alt="video">
+                            </div>
+                            <div class="service-card__title">Video Animation</div>
+                        </div>
+                        <div class="service-card_swipe back"></div>
+                    </div>
+                </div>
+                <div class="service-card flip-container" ontouchstart="this.classList.toggle('hover')">
+                    <div class="service-card__container flipper">
+                        <div class="service-card_main front">
+                            <div class="service-card__img">
+                                <img src="./assets/img/services/vr.png" alt="vr">
+                            </div>
+                            <div class="service-card__title">360<sup>0</sup> VR Tour</div>
+                        </div>
+                        <div class="service-card_swipe  back"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./script.js"></script>
+</body>
+</html>
