@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../blocks/works.sass"
+    ],
+    "names": [],
+    "file": "works.min.css"
+}

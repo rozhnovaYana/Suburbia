@@ -1,0 +1,55 @@
+.works
+    background: #00000e
+    &-slider
+        width: 100%
+        height: 100vh
+        margin-top: 60px
+        position: relative
+        overflow-x: hidden
+        &__wrapper
+            display: flex
+            height: 100%
+            transition: 0.5s all
+            
+        &__controls
+            position: fixed
+            bottom: 60px
+            right: 135px
+            display: flex
+        &__control
+            margin: 0 8px
+            cursor: pointer
+    &-slide
+        width: 100%
+        position: relative
+        &:nth-child(1)
+            background: url("../img/works/metaplace.png") center center/cover no-repeat
+        &:nth-child(2)
+            background: url("../img/works/house.png") center center/cover no-repeat
+        &:nth-child(3)
+            background: url("../img/works/marq.png") center center/cover no-repeat
+        &__title
+            position: absolute
+            font-style: normal
+            font-weight: 800
+            font-size: 2.2em
+            line-height: 1.5em
+            letter-spacing: 0.08em
+            text-transform: capitalize
+            color: #FFFFFF
+            bottom: 100px
+            left: 135px
+        &__subt
+            font-style: normal
+            font-weight: normal
+            font-size: 1em
+            line-height: 1.5em
+            letter-spacing: 0.04em
+            color: #FFFFFF
+            position: absolute
+            left: 135px
+            bottom: 60px
+            
+
+            
+
