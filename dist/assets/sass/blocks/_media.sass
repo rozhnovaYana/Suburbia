@@ -1,0 +1,52 @@
+@media screen and (max-width:1200px)
+    .container
+        max-width: 960px
+        font-size: 14px
+    .promo
+        &-header
+            padding: 20px 35px
+    .service
+        &-cards
+            margin-top: 70px
+        .container
+            padding: 50px 0
+@media screen and (max-width:992px)
+    .container
+        max-width: 720px
+        font-size: 12px
+    .promo
+        &-header
+            &__title
+                max-width: 150px
+            &__contact
+                &_btn
+                    margin-top: 50px
+    .service
+        &-cards
+            grid-template-columns: repeat(2, 1fr)
+@media screen and (max-width:768px)
+    .container
+        max-width: 540px
+        font-size: 14px
+    .service
+        &-cards
+            grid-template-columns: repeat(1, 260px)
+            width: 260px
+            margin: 60px auto 0
+@media screen and (max-width:576px)
+    .container
+        max-width: auto
+    .promo 
+        padding: 0 10px
+        h1
+            font-size: 2.7em
+        h3
+            font-size: 1.5em
+            line-height: 1.3em
+        &-header
+            &__contact
+                &_btn
+                     width: 180px
+        
+    
+    
