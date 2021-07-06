@@ -1671,7 +1671,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 
 document.addEventListener("DOMContentLoaded", function () {
-  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"])(".works-slider", ".works-slider__wrapper", ".works-slide", ".works-slider__controls .left", ".works-slider__controls .right", ".works-slider__controls");
+  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    wrapper: ".works-slider",
+    container: ".works-slider__wrapper",
+    oneSlide: ".works-slide",
+    prevArrow: ".works-slider__controls .left",
+    nextArrow: ".works-slider__controls .right",
+    controlsSelector: ".works-slider__controls"
+  });
+  Object(_modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    wrapper: ".review-slider",
+    container: ".review-slider__wrapper",
+    oneSlide: ".review-slide",
+    indicators: true,
+    bigWrapper: ".review"
+  });
 });
 
 /***/ }),
@@ -1692,7 +1706,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function slider(wrapper, container, oneSlide, prevArrow, nextArrow, controlsSelector) {
+function slider(_ref) {
+  var wrapper = _ref.wrapper,
+      container = _ref.container,
+      oneSlide = _ref.oneSlide,
+      _ref$prevArrow = _ref.prevArrow,
+      prevArrow = _ref$prevArrow === void 0 ? false : _ref$prevArrow,
+      _ref$nextArrow = _ref.nextArrow,
+      nextArrow = _ref$nextArrow === void 0 ? false : _ref$nextArrow,
+      _ref$controlsSelector = _ref.controlsSelector,
+      controlsSelector = _ref$controlsSelector === void 0 ? false : _ref$controlsSelector,
+      _ref$indicators = _ref.indicators,
+      indicators = _ref$indicators === void 0 ? false : _ref$indicators,
+      _ref$bigWrapper = _ref.bigWrapper,
+      bigWrapper = _ref$bigWrapper === void 0 ? false : _ref$bigWrapper;
   var sliderWrapper = document.querySelector(wrapper),
       sliderScroll = document.querySelector(container),
       slides = document.querySelectorAll(oneSlide),
@@ -1701,11 +1728,50 @@ function slider(wrapper, container, oneSlide, prevArrow, nextArrow, controlsSele
       controls = document.querySelectorAll(controlsSelector);
   var width = window.getComputedStyle(sliderWrapper).width;
   width = Math.floor(width.slice(0, width.length - 2));
-  var scroll = 0;
+  var scroll = 0,
+      slide = 1,
+      dots = [];
   sliderScroll.style.width = 100 * slides.length + "%";
   slides.forEach(function (slide) {
     slide.style.width = width;
   });
+
+  if (indicators) {
+    var _slider = document.querySelector(bigWrapper),
+        dotWrapper = document.createElement("ul");
+
+    dotWrapper.classList.add("carousel-indicators");
+    _slider.style.position = "relative";
+
+    _slider.append(dotWrapper);
+
+    for (var i = 0; i < slides.length; i++) {
+      var dot = document.createElement("li");
+      dotWrapper.append(dot);
+      dot.classList.add("dot");
+      dots.push(dot);
+
+      if (i == 0) {
+        dot.style.opacity = "1";
+      }
+
+      dot.setAttribute("data-slide-to", i + 1);
+    }
+
+    dots.forEach(function (dot) {
+      dot.addEventListener("click", function (e) {
+        var activeDot = e.target.getAttribute("data-slide-to");
+        slide = +activeDot;
+        scroll = (activeDot - 1) * width;
+        sliderScroll.style.transform = "translateX(-".concat(scroll, "px)");
+        dots.forEach(function (dot) {
+          dot.style.opacity = "0.5";
+        });
+        dot.style.opacity = "1";
+      });
+    });
+  }
+
   var maxScroll = (slides.length - 1) * width;
 
   function nextSlide() {
@@ -1713,6 +1779,19 @@ function slider(wrapper, container, oneSlide, prevArrow, nextArrow, controlsSele
       scroll = 0;
     } else {
       scroll += width;
+    }
+
+    if (slide == slides.length) {
+      slide = 1;
+    } else {
+      slide += 1;
+    }
+
+    if (indicators) {
+      dots.forEach(function (dot) {
+        dot.style.opacity = "0.5";
+      });
+      dots[slide - 1].style.opacity = "1";
     }
 
     sliderScroll.style.transform = "translateX(-".concat(scroll, "px)");
@@ -1725,28 +1804,37 @@ function slider(wrapper, container, oneSlide, prevArrow, nextArrow, controlsSele
       scroll -= width;
     }
 
+    if (slide == 1) {
+      slide = slides.length;
+    } else {
+      slide -= 1;
+    }
+
     sliderScroll.style.transform = "translateX(-".concat(scroll, "px)");
   }
 
-  next.addEventListener("click", function () {
-    nextSlide();
-  });
-  prev.addEventListener("click", function () {
-    prevSlide();
-  });
   var interval = setInterval(function () {
     return nextSlide();
   }, 3000);
-  controls.forEach(function (i) {
-    i.addEventListener("mouseleave", function () {
-      interval = setInterval(function () {
-        return nextSlide();
-      }, 3000);
+
+  try {
+    next.addEventListener("click", function () {
+      nextSlide();
     });
-    i.addEventListener("mouseenter", function () {
-      clearInterval(interval);
+    prev.addEventListener("click", function () {
+      prevSlide();
     });
-  });
+    controls.forEach(function (i) {
+      i.addEventListener("mouseleave", function () {
+        interval = setInterval(function () {
+          return nextSlide();
+        }, 3000);
+      });
+      i.addEventListener("mouseenter", function () {
+        clearInterval(interval);
+      });
+    });
+  } catch (_unused) {}
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (slider);

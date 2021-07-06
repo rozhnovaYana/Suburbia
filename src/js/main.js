@@ -1,4 +1,18 @@
 import slider from "./modules/slider"
 document.addEventListener("DOMContentLoaded", ()=>{
-    slider(".works-slider", ".works-slider__wrapper",".works-slide", ".works-slider__controls .left", ".works-slider__controls .right", ".works-slider__controls")
+    slider({
+        wrapper:".works-slider",
+        container:".works-slider__wrapper",
+        oneSlide:".works-slide", 
+        prevArrow:".works-slider__controls .left",
+        nextArrow:".works-slider__controls .right",
+        controlsSelector:".works-slider__controls"
+    })
+    slider({
+            wrapper:".review-slider",
+            container:".review-slider__wrapper",
+            oneSlide:".review-slide", 
+            indicators:true,
+            bigWrapper:".review"
+        })
 })

@@ -1,0 +1,82 @@
+.review
+    background: #00000e
+    padding: 100px 0 
+    &-slider
+        overflow-x: hidden
+        width: 100%
+        &__wrapper
+            display: flex
+            transition: 0.8s all
+    &-slide
+        display: flex
+        justify-content: space-around
+        width: 100%
+        padding: 50px 0
+        &__text
+            font-style: italic
+            font-weight: normal
+            font-size: 1.1em
+            line-height: 1.5em
+            letter-spacing: 0.04em
+            color: #FFFFFF
+            width: 400px
+            position: relative
+            &::before
+                content: "\0022"
+                position: absolute
+                font-size: 40px
+                font-weight: 800;
+                font-size: 70px
+                line-height: 86px
+                letter-spacing: 0.08em
+                text-transform: capitalize
+                color: #FFFFFF
+                left: -80px
+                top: -50px
+        &__sidebar
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            &-name
+                font-weight: 600;
+                font-size: 1.1em;
+                line-height: 1.2em;
+                letter-spacing: 0.04em;
+                color: #FFFFFF;
+                margin-top: 24px
+            &-proffesion
+                font-weight: normal
+                font-size: 1em
+                line-height: 1.5em
+                text-align: center
+                letter-spacing: 0.04em
+                color: #FFFFFF
+                margin-top: 12px
+.carousel-indicators 
+    position: absolute
+    right: 0
+    bottom: 50px
+    left: 0
+    z-index: 15
+    display: flex
+    justify-content: center
+    margin-right: 15%
+    margin-left: 15%
+    list-style: none
+.dot 
+    box-sizing: content-box 
+    flex: 0 1 auto  
+    width: 10px 
+    height: 10px 
+    margin-right: 3px   
+    margin-left: 3px    
+    cursor: pointer 
+    background-color: #fff  
+    background-clip: padding-box    
+    border-top: 10px solid transparent  
+    border-bottom: 10px solid transparent   
+    opacity: 0.5    
+    transition: opacity 0.6s ease   
+    border-radius: 100%
+
