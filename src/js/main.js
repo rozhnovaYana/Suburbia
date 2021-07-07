@@ -1,5 +1,6 @@
 import slider from "./modules/slider"
 import video from "./modules/video"
+import questions from "./modules/questions"
 document.addEventListener("DOMContentLoaded", ()=>{
     slider({
         wrapper:".works-slider",
@@ -17,4 +18,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
             bigWrapper:".review"
         })
     video()
+    questions()
 })

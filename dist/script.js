@@ -1670,6 +1670,8 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 /* harmony import */ var _modules_video__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/video */ "./src/js/modules/video.js");
+/* harmony import */ var _modules_questions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/questions */ "./src/js/modules/questions.js");
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1689,7 +1691,49 @@ document.addEventListener("DOMContentLoaded", function () {
     bigWrapper: ".review"
   });
   Object(_modules_video__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_modules_questions__WEBPACK_IMPORTED_MODULE_2__["default"])();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/questions.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/questions.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var questions = function questions() {
+  var items = document.querySelectorAll(".questions-item"),
+      cross = document.querySelectorAll(".questions-item__cross");
+  cross.forEach(function (i) {
+    i.addEventListener("click", function (e) {
+      cross.forEach(function (item) {
+        if (item !== e.target) {
+          item.classList.remove("questions-item__cross_active");
+
+          var _num = item.getAttribute('data-cross') - 1;
+
+          var _descr = items[_num].querySelector(".questions-item__descr");
+
+          _descr.classList.remove("questions-item__descr_active");
+        }
+      });
+      i.classList.toggle("questions-item__cross_active");
+      var num = i.getAttribute('data-cross') - 1;
+      var descr = items[num].querySelector(".questions-item__descr");
+      descr.classList.toggle("questions-item__descr_active");
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (questions);
 
 /***/ }),
 

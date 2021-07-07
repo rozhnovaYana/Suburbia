@@ -1,0 +1,74 @@
+.questions
+    .title
+        margin-bottom: 34px
+    &-list
+        display: grid
+        grid-row-gap: 35px
+    &-item
+        &__cross
+            cursor: pointer
+            div
+                width: 20px
+                height: 2px
+                background: white
+                margin-top: -1px
+                transition: 0.5s all
+                &:nth-child(1)
+                    transform: rotate(90deg)
+            &_active
+                div
+                    &:nth-child(1)
+                        transform: rotate(-45deg)
+                        margin-top: 1px
+                    &:nth-child(2)
+                        transform: rotate(45deg) 
+        &__title
+            font-weight: 600
+            font-size: 1.2em
+            line-height: 1.5em
+            display: flex
+            align-items: center
+            letter-spacing: 0.04em
+            color: #FFFFFF
+            margin-bottom: 10px
+            position: relative
+            display: flex
+            justify-content: space-between
+        &__descr
+            font-weight: normal;
+            font-size: 1em
+            line-height: 1.5em
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.04em;
+            color: #FFFFFF;
+            width: 50%
+            opacity: 0
+            height: 0
+            margin-top: -100%
+            animation: hide 0.5s
+            &_active
+                opacity: 1
+                height: auto
+                margin-top: 0
+                animation: opacity 0.5s
+@keyframes opacity
+    0%
+        opacity: 0
+
+    100%
+        opacity: 1
+@keyframes hide
+    0%
+        opacity: 1
+    65%
+        opacity: 0
+    100%
+        opacity: 0
+        
+
+            
+
+
+
+
