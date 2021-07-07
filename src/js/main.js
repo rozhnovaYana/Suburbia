@@ -1,4 +1,5 @@
 import slider from "./modules/slider"
+import video from "./modules/video"
 document.addEventListener("DOMContentLoaded", ()=>{
     slider({
         wrapper:".works-slider",
@@ -15,4 +16,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
             indicators:true,
             bigWrapper:".review"
         })
+    video()
 })
