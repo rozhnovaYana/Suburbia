@@ -14,8 +14,8 @@
         position: relative
         overflow: hidden
         &__text
-            font-size: 12px;
-            line-height: 15px;
+            font-size: 0.8em
+            line-height: 1.1em
             text-align: center;
             letter-spacing: 0.04em;
             color: #FFFFFF;
@@ -42,6 +42,21 @@
         grid-template-columns: repeat(2, 1fr)
         grid-row-gap: 30px
         grid-column-gap: 30px
+        button
+            width: 170px;
+            height: 35px;  
+            background: #FFFFFF;
+            border: 2px solid #FFFFFF;
+            box-sizing: border-box;
+            border-radius: 6px;
+            font-size: 1em;
+            line-height: 1.2em;
+            text-align: center
+            letter-spacing: 0.04em; 
+            cursor: pointer
+            &::hover
+                background: #535353;
+
     &-input
         position: relative
         height: 50px
@@ -84,6 +99,50 @@
             position: absolute
             opacity: 0
             z-index: -1
+            &:checked+label
+                &::before
+                    content: "\2714"
+                    font-size: 1.2em
+                    display: flex
+                    justify-content: center
+                    align-items: center
+    &-checkbox
+        grid-column-end: 3
+        grid-column-start: 1
+        label
+            cursor: pointer
+            font-size: 1em;
+            line-height: 1.2em;
+            letter-spacing: 0.04em;
+            color: #FFFFFF;
+            position: relative
+            display: inline-flex
+            align-items: center
+            &::before
+                content: ''
+                flex-shrink: 0
+                flex-grow: 0
+                margin-right: 24px
+                background-repeat: no-repeat
+                background-position: center center
+                background-size: 50% 50%
+                width: 24px;
+                height: 24px;
+                border: 1px solid #FFFFFF;
+                box-sizing: border-box;
+                border-radius: 4px;
+    &-privacy
+        font-size: 0.8em
+        line-height: 1.5em;
+        letter-spacing: 0.04em;
+        color: #FFFFFF;
+        grid-column-start: 1
+        grid-column-end: 3
+        margin-top: -5px
+        a
+            color: #FFFFFF;
+            cursor: pointer
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus,
