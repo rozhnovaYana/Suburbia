@@ -68,6 +68,12 @@
                 flex-grow: 1
         &-item
             margin-bottom: 20px
+    .questions
+        &-list
+            grid-row-gap: 50px
+        &-item
+            &__descr
+                width: 80%
 @media screen and (max-width:576px)
     .container
         max-width: auto
@@ -79,7 +85,7 @@
     .promo 
         padding: 0 10px
         h1
-            font-size: 2.7em
+            font-size: 2em
         h3
             font-size: 1.5em
             line-height: 1.3em
@@ -117,6 +123,15 @@
             display: grid
             grid-template-columns: repeat(2, 1fr)
             grid-column-gap: 10px
+    .about
+        &-list
+            grid-template-columns: repeat(2, 1fr)
+    .questions
+        &-list
+            grid-row-gap: 60px
+        &-item
+            &__descr
+                width: 90%
     
             
 

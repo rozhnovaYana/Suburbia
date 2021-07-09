@@ -418,29 +418,29 @@
         <div class="container">
             <div class="title contact-title">Contact Us</div>
             <div class="title__sub contact-title">Fill the form and our team will answer you shortly</div>
-            <form action="#">
+            <form action="#" method="POST" class="form"enctype="multipart/form-data">
                 <div class="contact-input" id=name>
-                    <input type="text" name="name" >
+                    <input type="text" name="name" data-valid >
                 </div>
                 <div class="contact-input"id=mail>
-                    <input type="email" name="mail">
+                    <input type="email" name="email" data-valid>
                 </div>
                 <div class="contact-input"id=tel>
-                    <input type="text" name="tel">
+                    <input type="text" name="tel" data-valid>
                 </div>
                 <div class="contact-input" id=country>
-                    <input type="text" name="country">
+                    <input type="text" name="country" data-valid>
                 </div>
                 <div class="contact-input"id=message>
-                    <input type="text" name="message">
+                    <input type="text" name="message" data-valid>
                 </div>
                 <div class="contact-file">
                     <div class="contact-file__img"><img src="./assets/img/contact/contact.png" alt="contact"></div>
                     <div class="contact-file__text">Drag and drop or <a>browse</a> your files</div>
-                    <input type="file" name="upload" accept="image/*">
+                    <input type="file" name="file" accept="image/*">
                 </div>
                 <div class="contact-checkbox">
-                    <input type="checkbox" id="check" name="check">
+                    <input type="checkbox" id="check" name="check" >
                     <label for="check">I want to receive news and updates once in a while</label>
                 </div>
                 <div class="contact-privacy">
@@ -449,7 +449,38 @@
                 <button>Send</button>
             </form>
         </div>
+        <div class="contact-modal">
+            <div class="contact-modal__wrapper">
+                <div class="contact-modal__cross">&#10006;</div>
+                <div class="contact-modal__text">
+                    Loading...
+                </div>
+            </div>
+        </div>
     </section>
+    <footer class="section footer">
+        <div class="container">
+            <div class="footer-img">
+                <img src="./assets/img/promo/Union.png" alt="union">
+                <div class="footer-img__descr footer-text">
+                    Be the best.work with the best.
+                </div>
+            </div>
+            <div class="footer-info">
+                <div class="footer-info__text footer-text">
+                    © Copyright 2021 Suburbia Studio <br>
+                    <a href="#"class="footer-text">Terms of use and privacy policy
+                    </a>
+                </div>
+                <ul class="footer-list">
+                    <li class="footer-item"><a href="#"><img src="./assets/img/footer/facebook.png" alt="facebook"></a></li>
+                    <li class="footer-item"><a href="#"><img src="./assets/img/footer/linkedin.png" alt="linkedin"></a></li>
+                    <li class="footer-item"><a href="#"><img src="./assets/img/footer/be.png" alt="be"></a></li>
+                    <li class="footer-item"><a href="#"><img src="./assets/img/footer/instagram.png" alt="instagram"></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer> 
     <script src="./script.js"></script>
 </body>
 </html>

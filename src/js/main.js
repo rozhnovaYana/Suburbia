@@ -2,6 +2,7 @@ import slider from "./modules/slider"
 import video from "./modules/video"
 import questions from "./modules/questions"
 import drop from "./modules/drop"
+import form from "./modules/form"
 document.addEventListener("DOMContentLoaded", ()=>{
     slider({
         wrapper:".works-slider",
@@ -20,5 +21,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         })
     video()
     questions()
-    drop('[name="upload"]', '.contact-file')
+    drop('[name="file"]', '.contact-file')
+    form()
+    
+    
+
 })
