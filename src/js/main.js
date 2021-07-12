@@ -3,6 +3,7 @@ import video from "./modules/video"
 import questions from "./modules/questions"
 import drop from "./modules/drop"
 import form from "./modules/form"
+import scroll from "./modules/scroll"
 document.addEventListener("DOMContentLoaded", ()=>{
     slider({
         wrapper:".works-slider",
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     questions()
     drop('[name="file"]', '.contact-file')
     form()
+    scroll("#contact")
     
     
 

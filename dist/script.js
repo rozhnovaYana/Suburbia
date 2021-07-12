@@ -4204,6 +4204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_questions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/questions */ "./src/js/modules/questions.js");
 /* harmony import */ var _modules_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/drop */ "./src/js/modules/drop.js");
 /* harmony import */ var _modules_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/form */ "./src/js/modules/form.js");
+/* harmony import */ var _modules_scroll__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/scroll */ "./src/js/modules/scroll.js");
+
 
 
 
@@ -4229,6 +4231,7 @@ document.addEventListener("DOMContentLoaded", function () {
   Object(_modules_questions__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_modules_drop__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="file"]', '.contact-file');
   Object(_modules_form__WEBPACK_IMPORTED_MODULE_4__["default"])();
+  Object(_modules_scroll__WEBPACK_IMPORTED_MODULE_5__["default"])("#contact");
 });
 
 /***/ }),
@@ -4517,6 +4520,37 @@ var questions = function questions() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (questions);
+
+/***/ }),
+
+/***/ "./src/js/modules/scroll.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/scroll.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function scroll(selector) {
+  var linkElement = document.querySelectorAll("[href='".concat(selector, "']"));
+  linkElement.forEach(function (item) {
+    var id = item.getAttribute("href"),
+        hiddenElement = document.querySelector("".concat(id));
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      hiddenElement.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (scroll);
 
 /***/ }),
 
