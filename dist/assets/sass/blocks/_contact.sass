@@ -1,4 +1,10 @@
 .contact
+    &-column
+        display: grid
+        grid-column-gap: 100px
+        grid-template-columns: repeat(2, 1fr)
+
+
     &-file
         background: #161616
         border: 1px dashed #FFFFFF
@@ -14,7 +20,7 @@
         position: relative
         overflow: hidden
         &__text
-            font-size: 0.8em
+            font-size: 0.8rem
             line-height: 1.1em
             text-align: center;
             letter-spacing: 0.04em;
@@ -36,26 +42,32 @@
 
     &-title
         text-align: left
+        margin-bottom: 30px
+
     form
-        width: 570px
         display: grid
         grid-template-columns: repeat(2, 1fr)
         grid-row-gap: 30px
         grid-column-gap: 30px
         button
             width: 170px;
-            height: 35px;  
+            height: 40px
+            max-height: 40px;  
             background: #FFFFFF;
             border: 2px solid #FFFFFF;
             box-sizing: border-box;
             border-radius: 6px;
-            font-size: 1em;
+            font-size: 1rem;
             line-height: 1.2em;
             text-align: center
             letter-spacing: 0.04em; 
             cursor: pointer
             &::hover
                 background: #535353;
+        .contact-title
+            grid-column-end: 3
+            grid-column-start: 1
+        
 
     &-input
         position: relative
@@ -76,7 +88,7 @@
             content: "Full name*"
             position: absolute
             font-weight: 500;
-            font-size: 1em;
+            font-size: 1rem;
             line-height: 1.2em;
             letter-spacing: 0.04em;
             color: #FFFFFF;
@@ -104,18 +116,20 @@
             opacity: 0
             z-index: -1
             &:checked+label
+                margin-bottom: 5px
                 &::before
                     content: "\2714"
-                    font-size: 1.2em
+                    font-size: 1.2rem
                     display: flex
                     justify-content: center
                     align-items: center
+                    
     &-checkbox
         grid-column-end: 3
         grid-column-start: 1
         label
             cursor: pointer
-            font-size: 1em;
+            font-size: 1rem;
             line-height: 1.2em;
             letter-spacing: 0.04em;
             color: #FFFFFF;
@@ -136,7 +150,7 @@
                 box-sizing: border-box;
                 border-radius: 4px;
     &-privacy
-        font-size: 0.8em
+        font-size: 0.8rem
         line-height: 1.5em;
         letter-spacing: 0.04em;
         color: #FFFFFF;
@@ -158,17 +172,45 @@
         align-items: center
         opacity: 0
         z-index: -1
-
+        &__title
+            font-weight: 800;
+            font-size: 1.8rem
+            line-height: 1.5em
+            text-align: center;
+            letter-spacing: 0.08em;
+            text-transform: capitalize;
+            color: #FFFFFF;
+            margin-bottom: 40px
+        &__subt
+            font-size: 1rem
+            line-height: 1.5em
+            text-align: center;
+            letter-spacing: 0.04em;
+            color: #FFFFFF;
+            margin-bottom: 50px
+        &__btns
+            display: grid
+            grid-template-columns: repeat(2, 1fr)
+            grid-column-gap: 40px
+        &__btn
+            cursor: pointer
+            padding: 10px
+            font-size: 1.5rem
+            line-height: 1.2em
+            text-align: center;
+            letter-spacing: 0.04em;
+            color: #040404;
         &_active
                 opacity: 1
                 z-index: 20
                 transition: 0.5s all
         &__wrapper
-            width: 400px
-            height: 250px
+            width: 700px
+            height: 384px;
+            padding: 80px 90px
             background: #040404
-            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.03)
-            border-radius: 12px
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
             z-index: 10
             display: flex
             justify-content: center
@@ -179,13 +221,13 @@
             position: absolute
             top: 10px
             right: 10px
-            font-weight: 800;
-            font-size: 1.8em
+            font-weight: 400;
+            font-size: 1.8rem
             color: #FFFFFF;
             cursor: pointer
         &__text
             font-weight: 800;
-            font-size: 1.8em
+            font-size: 1.8rem
             line-height: 1.5em
             text-align: center;
             letter-spacing: 0.08em;
@@ -195,6 +237,42 @@
             max-width: 50px
             height: 50px
             display: block
+    &-card
+        font-size: 1rem
+        line-height: 1.5em
+        letter-spacing: 0.04em;
+        color: #FFFFFF
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        grid-row-gap: 20px
+        grid-template-rows: 0.8fr 0.2fr
+        &__adress
+            div
+                margin: 5px 0
+        &__info
+            div
+              margin: 5px 0  
+        &__soc
+            display: flex
+            li
+                margin-right: 10px
+                cursor: pointer
+#back
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 0px 30px rgba(255, 255, 255, 0.1));
+    border-radius: 6px;
+    color: white
+
+#download
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: black
+  
+
 
 
 input:-webkit-autofill,
@@ -209,4 +287,13 @@ select:-webkit-autofill:focus
   -webkit-text-fill-color: white;
   background: transparent
   transition: background-color 5000s ease-in-out 0s;
+iframe 
+  filter: grayscale(100%) invert(100%)
+  width: 100%
+  height: 75%
+  grid-column-start: 1
+  grid-column-end: 3
+
+
+
 

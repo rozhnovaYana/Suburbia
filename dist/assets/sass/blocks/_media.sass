@@ -1,19 +1,24 @@
 @media screen and (max-width:1200px)
+    html
+        font-size: 14px
     .container
         max-width: 960px
-    .section
-        font-size: 14px
     .promo
         &-header
             padding: 20px 35px
     .service
         &-cards
             margin-top: 70px
+    .contact
+        &-column
+            grid-column-gap: 50px
+            
 @media screen and (max-width:992px)
+    html
+        font-size: 12px
     .container
         max-width: 720px
     .section
-        font-size: 12px
         padding: 65px 0 0
     .promo
         &-header
@@ -48,18 +53,20 @@
             &__text
                 &::before
                     left: 0
+    .footer
+        padding-bottom: 30px
 @media screen and (max-width:768px)
+    html
+        font-size: 14px
     .container
         max-width: 540px
-    .section
-        font-size: 14px
     .service
         &-cards
             grid-template-columns: repeat(1, 220px)
             width: 260px
             margin: 100px auto 0
             grid-template-rows: repeat(4, 230px)
-            grid-row-gap: 50px
+            grid-row-gap: 70px
     .reasons
         &-list
                 display: flex
@@ -74,9 +81,18 @@
         &-item
             &__descr
                 width: 80%
+    .contact
+        &-column
+            grid-column-gap: 0
+            grid-template-columns: 1fr
+            grid-row-gap: 30px
+            grid-template-rows: auto 600px
+        &-modal
+            &__wrapper
+                width: 85%
 @media screen and (max-width:576px)
     .container
-        max-width: auto
+        max-width: 95vw
     .section
         padding: 40px 5px 0
     .title
@@ -85,14 +101,18 @@
     .promo 
         padding: 0 10px
         h1
-            font-size: 2em
+            font-size: 2rem
+            margin-top: 45%
         h3
-            font-size: 1.5em
+            font-size: 1.5rem
             line-height: 1.3em
         &-header
+            padding: 30px 0px
             &__contact
+                font-size: 0.8rem
                 &_btn
                      width: 180px
+                     font-size: 1.2rem
     .service
         &-cards
             grid-template-columns: repeat(1, 220px)
@@ -130,8 +150,44 @@
         &-list
             grid-row-gap: 60px
         &-item
+            font-size: 0.8rem
             &__descr
                 width: 90%
+    .contact
+        padding: 70px 0 0
+
+        &-card
+            grid-row-gap: 10px
+            display: flex
+            justify-content: center
+            flex-direction: column
+            &__adress, &__info
+                text-align: center
+                div
+                    display: flex
+                    justify-content: center
+        &-modal
+            &__wrapper
+                width: 95%
+            &__title
+                font-size: 1.5rem
+            &__subt
+                font-size: 0.8rem
+            &__btn
+                font-size: 1.2rem
+            &__btns
+                grid-column-gap: 10px
+    .footer
+        padding: 40px 0
+        .container
+            display: grid
+            grid-row-gap: 20px
+        &-info
+            grid-column-gap: 10px
+    
+            
+
+
     
             
 

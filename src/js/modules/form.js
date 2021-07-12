@@ -19,14 +19,14 @@ const forms=()=>{
         })
     })
     mask(`[name="tel"]`)
-    const massages={
-        loading:"Loading...",
-        done:"We will call you back",
-        failed:"Something went wrong",
-        spinner:"assets/img/form/spinner.gif",
-        ok:"assets/img/form/ok.png",
-        failed:"assets/img/form/fail.png"
-    };
+    // const massages={
+    //     loading:"Loading...",
+    //     done:"We will call you back",
+    //     failed:"Something went wrong",
+    //     spinner:"assets/img/form/spinner.gif",
+    //     ok:"assets/img/form/ok.png",
+    //     failed:"assets/img/form/fail.png"
+    // };
 
     const clearInputs=()=>{
         allInputs.forEach(input=>{
@@ -61,22 +61,25 @@ const forms=()=>{
             cross.addEventListener("click", ()=>{
                 modal.classList.remove('contact-modal_active')
             })
+            document.querySelector("#back").addEventListener("click", ()=>{
+                modal.classList.remove('contact-modal_active')
+            })
             //создаем блок для трансляции сообщения и картинки в процеесе отправки формы
-            let statusImg=document.createElement("img")
-            statusImg.classList.add("contact-modal__img")
-            modalText.textContent=massages.loading
-            statusImg.setAttribute("src", massages.spinner)
-            modalText.parentNode.appendChild(statusImg)
+            // let statusImg=document.createElement("img")
+            // statusImg.classList.add("contact-modal__img")
+            // modalText.textContent=massages.loading
+            // statusImg.setAttribute("src", massages.spinner)
+            // modalText.parentNode.appendChild(statusImg)
             let api="assets/mailer/smart.php"
                 const data=new FormData(form)
             postData(api, data)
-            .then((data)=>{
+            .then(()=>{
                 document.body.style.overflow = "hidden"
-                statusImg.setAttribute("src", massages.ok)
-                modalText.textContent=massages.done
+                // statusImg.setAttribute("src", massages.ok)
+                // modalText.textContent=massages.done
             }).catch(()=>{
-                statusImg.setAttribute("src", massages.failed)
-                modalText.textContent=massages.failed
+                // statusImg.setAttribute("src", massages.failed)
+                // modalText.textContent=massages.failed
             }).finally(()=>{
                 clearInputs()
                 setTimeout(()=>{

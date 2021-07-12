@@ -4329,9 +4329,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 var forms = function forms() {
@@ -4352,15 +4349,14 @@ var forms = function forms() {
       input.previousElementSibling.textContent = arrayFromFileName[0].substring(0, 10) + dots + arrayFromFileName[1];
     });
   });
-  Object(_mask__WEBPACK_IMPORTED_MODULE_6__["default"])("[name=\"tel\"]");
-
-  var massages = _defineProperty({
-    loading: "Loading...",
-    done: "We will call you back",
-    failed: "Something went wrong",
-    spinner: "assets/img/form/spinner.gif",
-    ok: "assets/img/form/ok.png"
-  }, "failed", "assets/img/form/fail.png");
+  Object(_mask__WEBPACK_IMPORTED_MODULE_6__["default"])("[name=\"tel\"]"); // const massages={
+  //     loading:"Loading...",
+  //     done:"We will call you back",
+  //     failed:"Something went wrong",
+  //     spinner:"assets/img/form/spinner.gif",
+  //     ok:"assets/img/form/ok.png",
+  //     failed:"assets/img/form/fail.png"
+  // };
 
   var clearInputs = function clearInputs() {
     allInputs.forEach(function (input) {
@@ -4396,22 +4392,23 @@ var forms = function forms() {
         modal.classList.add('contact-modal_active');
         cross.addEventListener("click", function () {
           modal.classList.remove('contact-modal_active');
+        });
+        document.querySelector("#back").addEventListener("click", function () {
+          modal.classList.remove('contact-modal_active');
         }); //создаем блок для трансляции сообщения и картинки в процеесе отправки формы
+        // let statusImg=document.createElement("img")
+        // statusImg.classList.add("contact-modal__img")
+        // modalText.textContent=massages.loading
+        // statusImg.setAttribute("src", massages.spinner)
+        // modalText.parentNode.appendChild(statusImg)
 
-        var statusImg = document.createElement("img");
-        statusImg.classList.add("contact-modal__img");
-        modalText.textContent = massages.loading;
-        statusImg.setAttribute("src", massages.spinner);
-        modalText.parentNode.appendChild(statusImg);
         var api = "assets/mailer/smart.php";
         var data = new FormData(form);
-        Object(_services_requests__WEBPACK_IMPORTED_MODULE_7__["postData"])(api, data).then(function (data) {
-          document.body.style.overflow = "hidden";
-          statusImg.setAttribute("src", massages.ok);
-          modalText.textContent = massages.done;
-        }).catch(function () {
-          statusImg.setAttribute("src", massages.failed);
-          modalText.textContent = massages.failed;
+        Object(_services_requests__WEBPACK_IMPORTED_MODULE_7__["postData"])(api, data).then(function () {
+          document.body.style.overflow = "hidden"; // statusImg.setAttribute("src", massages.ok)
+          // modalText.textContent=massages.done
+        }).catch(function () {// statusImg.setAttribute("src", massages.failed)
+          // modalText.textContent=massages.failed
         }).finally(function () {
           clearInputs();
           setTimeout(function () {
@@ -4494,27 +4491,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var questions = function questions() {
-  var items = document.querySelectorAll(".questions-item"),
-      cross = document.querySelectorAll(".questions-item__cross");
-  var active;
-  cross.forEach(function (i, num) {
+  var items = document.querySelectorAll(".questions-item");
+  items.forEach(function (i) {
     i.addEventListener("click", function (e) {
-      console.log(e.target);
-      cross.forEach(function (item) {
-        if (item !== e.target) {
-          console.log("f");
-          item.classList.remove("questions-item__cross_active");
-
-          var _num = item.getAttribute('data-cross') - 1;
-
-          var _descr = items[_num].querySelector(".questions-item__descr");
-
-          _descr.classList.remove("questions-item__descr_active");
-        }
-      });
-      i.classList.toggle("questions-item__cross_active");
-      var descr = items[num].querySelector(".questions-item__descr");
-      descr.classList.toggle("questions-item__descr_active");
+      i.classList.toggle("questions-item_active");
     });
   });
 };
