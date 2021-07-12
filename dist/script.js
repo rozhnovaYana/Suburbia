@@ -3111,6 +3111,144 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/es.string.replace.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.replace.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toObject = __webpack_require__(/*! ../internals/to-object */ "./node_modules/core-js/internals/to-object.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+var toInteger = __webpack_require__(/*! ../internals/to-integer */ "./node_modules/core-js/internals/to-integer.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+
+var max = Math.max;
+var min = Math.min;
+var floor = Math.floor;
+var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d\d?|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d\d?)/g;
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+};
+
+// @@replace logic
+fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative) {
+  return [
+    // `String.prototype.replace` method
+    // https://tc39.github.io/ecma262/#sec-string.prototype.replace
+    function replace(searchValue, replaceValue) {
+      var O = requireObjectCoercible(this);
+      var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
+      return replacer !== undefined
+        ? replacer.call(searchValue, O, replaceValue)
+        : nativeReplace.call(String(O), searchValue, replaceValue);
+    },
+    // `RegExp.prototype[@@replace]` method
+    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
+    function (regexp, replaceValue) {
+      var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+
+      var functionalReplace = typeof replaceValue === 'function';
+      if (!functionalReplace) replaceValue = String(replaceValue);
+
+      var global = rx.global;
+      if (global) {
+        var fullUnicode = rx.unicode;
+        rx.lastIndex = 0;
+      }
+      var results = [];
+      while (true) {
+        var result = regExpExec(rx, S);
+        if (result === null) break;
+
+        results.push(result);
+        if (!global) break;
+
+        var matchStr = String(result[0]);
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+      }
+
+      var accumulatedResult = '';
+      var nextSourcePosition = 0;
+      for (var i = 0; i < results.length; i++) {
+        result = results[i];
+
+        var matched = String(result[0]);
+        var position = max(min(toInteger(result.index), S.length), 0);
+        var captures = [];
+        // NOTE: This is equivalent to
+        //   captures = result.slice(1).map(maybeToString)
+        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+        var namedCaptures = result.groups;
+        if (functionalReplace) {
+          var replacerArgs = [matched].concat(captures, position, S);
+          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+          var replacement = String(replaceValue.apply(undefined, replacerArgs));
+        } else {
+          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+        }
+        if (position >= nextSourcePosition) {
+          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+          nextSourcePosition = position + matched.length;
+        }
+      }
+      return accumulatedResult + S.slice(nextSourcePosition);
+    }
+  ];
+
+  // https://tc39.github.io/ecma262/#sec-getsubstitution
+  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
+    var tailPos = position + matched.length;
+    var m = captures.length;
+    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+    if (namedCaptures !== undefined) {
+      namedCaptures = toObject(namedCaptures);
+      symbols = SUBSTITUTION_SYMBOLS;
+    }
+    return nativeReplace.call(replacement, symbols, function (match, ch) {
+      var capture;
+      switch (ch.charAt(0)) {
+        case '$': return '$';
+        case '&': return matched;
+        case '`': return str.slice(0, position);
+        case "'": return str.slice(tailPos);
+        case '<':
+          capture = namedCaptures[ch.slice(1, -1)];
+          break;
+        default: // \d\d?
+          var n = +ch;
+          if (n === 0) return match;
+          if (n > m) {
+            var f = floor(n / 10);
+            if (f === 0) return match;
+            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+            return match;
+          }
+          capture = captures[n - 1];
+      }
+      return capture === undefined ? '' : capture;
+    });
+  }
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es.string.split.js":
 /*!*********************************************************!*\
   !*** ./node_modules/core-js/modules/es.string.split.js ***!
@@ -4089,7 +4227,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   Object(_modules_video__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_questions__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  Object(_modules_drop__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="upload"]', '.contact-file');
+  Object(_modules_drop__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="file"]', '.contact-file');
   Object(_modules_form__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
 
@@ -4179,7 +4317,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+/* harmony import */ var _mask__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mask */ "./src/js/modules/mask.js");
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 
 
 
@@ -4191,10 +4330,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var forms = function forms(state) {
+
+var forms = function forms() {
   var allForms = document.querySelectorAll("form"),
       allInputs = document.querySelectorAll("input"),
-      upload = document.querySelectorAll('[name="upload"]');
+      upload = document.querySelectorAll('[name="file"]'),
+      check = document.querySelectorAll('[name="check"]'),
+      modal = document.querySelector(".contact-modal"),
+      modalText = modal.querySelector(".contact-modal__text"),
+      cross = modal.querySelector(".contact-modal__cross"),
+      validatorInputs = document.querySelectorAll('[data-valid]');
   upload.forEach(function (input) {
     input.addEventListener("input", function () {
       var fileName = input.files[0].name;
@@ -4204,18 +4349,15 @@ var forms = function forms(state) {
       input.previousElementSibling.textContent = arrayFromFileName[0].substring(0, 10) + dots + arrayFromFileName[1];
     });
   });
+  Object(_mask__WEBPACK_IMPORTED_MODULE_6__["default"])("[name=\"tel\"]");
 
   var massages = _defineProperty({
-    loading: "Загрузка...",
-    done: "Ваши данные были успешно отправлены",
-    failed: "Что-то пошло не так...",
-    spinner: "assets/img/spinner.gif",
-    ok: "assets/img/ok.png"
-  }, "failed", "assets/img/fail.png"),
-      path = {
-    designer: "assets/server.php",
-    question: "assets/question.php"
-  };
+    loading: "Loading...",
+    done: "We will call you back",
+    failed: "Something went wrong",
+    spinner: "assets/img/form/spinner.gif",
+    ok: "assets/img/form/ok.png"
+  }, "failed", "assets/img/form/fail.png");
 
   var clearInputs = function clearInputs() {
     allInputs.forEach(function (input) {
@@ -4224,59 +4366,114 @@ var forms = function forms(state) {
     upload.forEach(function (input) {
       return input.previousElementSibling.textContent = "Файл не выбран";
     });
+    check.forEach(function (i) {
+      i.checked = false;
+    });
   };
 
   allForms.forEach(function (form) {
     form.addEventListener("submit", function (e) {
-      e.preventDefault(); //скрываем форму
-
-      form.classList.add("animated", "fading"); //создаем блок для трансляции сообщения и картинки в процеесе отправки формы
-
-      var statusDiv = document.createElement('div');
-      form.parentNode.appendChild(statusDiv);
-      statusDiv.classList.add('status');
-      statusDiv.classList.add("animated", "fadeInDown");
-      var statusImg = document.createElement("img");
-      statusDiv.appendChild(statusImg);
-      statusImg.setAttribute("src", massages.spinner);
-      var statusText = document.createElement("div");
-      statusDiv.appendChild(statusText);
-      statusText.textContent = massages.loading;
-      var api;
-      form.closest(".popup-design") ? api = path.designer : api = path.question;
-      var data = new FormData(form);
-
-      if (form.id === "calc") {
-        for (var keys in state) {
-          data.append(keys, state[keys]);
-        }
-      }
-
-      Object(_services_requests__WEBPACK_IMPORTED_MODULE_6__["postData"])(api, data).then(function (data) {
-        statusImg.setAttribute("src", massages.ok);
-        statusText.textContent = massages.done;
-      }).catch(function () {
-        statusImg.setAttribute("src", massages.failed);
-        statusText.textContent = massages.failed;
-      }).finally(function () {
-        clearInputs();
-        setTimeout(function () {
-          statusDiv.remove();
-          form.classList.remove("fading");
-          form.classList.add("animated", "fadeInDown");
-
-          try {
-            form.closest("[data-modal]").style.display = "none";
-          } catch (_unused) {}
-
-          document.body.style.overflow = "";
-        }, 5000);
+      var errors = false;
+      e.preventDefault();
+      validatorInputs.forEach(function (inp) {
+        inp.addEventListener('change', function () {
+          inp.style.border = "";
+        });
       });
+      validatorInputs.forEach(function (item) {
+        if (item.value.length == 0 || item.value == " ") {
+          item.style.borderBottom = "1px solid red";
+          errors = true;
+        } else {
+          item.style.borderBottom = "1px solid #FFFFFF";
+        }
+      });
+
+      if (!errors) {
+        modal.classList.add('contact-modal_active');
+        cross.addEventListener("click", function () {
+          modal.classList.remove('contact-modal_active');
+        }); //создаем блок для трансляции сообщения и картинки в процеесе отправки формы
+
+        var statusImg = document.createElement("img");
+        statusImg.classList.add("contact-modal__img");
+        modalText.textContent = massages.loading;
+        statusImg.setAttribute("src", massages.spinner);
+        modalText.parentNode.appendChild(statusImg);
+        var api = "assets/mailer/smart.php";
+        var data = new FormData(form);
+        Object(_services_requests__WEBPACK_IMPORTED_MODULE_7__["postData"])(api, data).then(function (data) {
+          document.body.style.overflow = "hidden";
+          statusImg.setAttribute("src", massages.ok);
+          modalText.textContent = massages.done;
+        }).catch(function () {
+          statusImg.setAttribute("src", massages.failed);
+          modalText.textContent = massages.failed;
+        }).finally(function () {
+          clearInputs();
+          setTimeout(function () {
+            modal.classList.remove("contact-modal_active");
+            document.body.style.overflow = "";
+          }, 5000);
+        });
+      }
     });
   });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (forms);
+
+/***/ }),
+
+/***/ "./src/js/modules/mask.js":
+/*!********************************!*\
+  !*** ./src/js/modules/mask.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var mask = function mask(selector) {
+  function createMask(event) {
+    var matrix = '+38 (0__) ___ __ __',
+        i = 0,
+        def = matrix.replace(/\D/g, ''),
+        //380
+    val = this.value.replace(/\D/g, ''); //380
+
+    if (def.length >= val.length) {
+      val = def;
+    }
+
+    this.value = matrix.replace(/./g, function (a) {
+      return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a;
+    });
+
+    if (event.type === 'blur') {
+      if (this.value.length <= 6) {
+        this.value = '';
+      }
+    } else {// setCursorPosition(this.value.length, this);
+    }
+  }
+
+  var inputs = document.querySelectorAll(selector);
+  inputs.forEach(function (input) {
+    input.addEventListener('input', createMask);
+    input.addEventListener('focus', createMask);
+    input.addEventListener('blur', createMask);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (mask);
 
 /***/ }),
 
@@ -4296,10 +4493,13 @@ __webpack_require__.r(__webpack_exports__);
 var questions = function questions() {
   var items = document.querySelectorAll(".questions-item"),
       cross = document.querySelectorAll(".questions-item__cross");
-  cross.forEach(function (i) {
+  var active;
+  cross.forEach(function (i, num) {
     i.addEventListener("click", function (e) {
+      console.log(e.target);
       cross.forEach(function (item) {
         if (item !== e.target) {
+          console.log("f");
           item.classList.remove("questions-item__cross_active");
 
           var _num = item.getAttribute('data-cross') - 1;
@@ -4310,7 +4510,6 @@ var questions = function questions() {
         }
       });
       i.classList.toggle("questions-item__cross_active");
-      var num = i.getAttribute('data-cross') - 1;
       var descr = items[num].querySelector(".questions-item__descr");
       descr.classList.toggle("questions-item__descr_active");
     });
@@ -4534,13 +4733,9 @@ var postData = function postData(url, data) {
 
         case 2:
           res = _context.sent;
-          _context.next = 5;
-          return regeneratorRuntime.awrap(res.text());
+          return _context.abrupt("return", res);
 
-        case 5:
-          return _context.abrupt("return", _context.sent);
-
-        case 6:
+        case 4:
         case "end":
           return _context.stop();
       }
