@@ -1,4 +1,5 @@
 import mask from "./mask"
+
 import {postData} from "../services/requests"
 const forms=()=>{
     const allForms=document.querySelectorAll("form"),
@@ -18,7 +19,7 @@ const forms=()=>{
             input.previousElementSibling.textContent=arrayFromFileName[0].substring(0, 10)+dots+arrayFromFileName[1]
         })
     })
-    mask(`[name="tel"]`)
+    // mask(`[name="tel"]`)
     // const massages={
     //     loading:"Loading...",
     //     done:"We will call you back",
@@ -27,6 +28,7 @@ const forms=()=>{
     //     ok:"assets/img/form/ok.png",
     //     failed:"assets/img/form/fail.png"
     // };
+   
 
     const clearInputs=()=>{
         allInputs.forEach(input=>{
@@ -60,9 +62,11 @@ const forms=()=>{
             modal.classList.add('contact-modal_active')
             cross.addEventListener("click", ()=>{
                 modal.classList.remove('contact-modal_active')
+                document.body.style.overflow = ""
             })
             document.querySelector("#back").addEventListener("click", ()=>{
                 modal.classList.remove('contact-modal_active')
+                document.body.style.overflow = ""
             })
             //создаем блок для трансляции сообщения и картинки в процеесе отправки формы
             // let statusImg=document.createElement("img")
@@ -84,7 +88,7 @@ const forms=()=>{
                 clearInputs()
                 setTimeout(()=>{
                     modal.classList.remove("contact-modal_active")
-                    document.body.style.overflow = ""
+                    
                 }, 5000)
             })
             }

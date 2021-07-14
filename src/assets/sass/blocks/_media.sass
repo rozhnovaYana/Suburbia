@@ -76,8 +76,6 @@
         &-item
             margin-bottom: 20px
     .questions
-        &-list
-            grid-row-gap: 50px
         &-item
             &__descr
                 width: 80%
@@ -90,6 +88,10 @@
         &-modal
             &__wrapper
                 width: 85%
+                padding: 50px 20px
+            &__btn
+                width: 100%
+                font-size: 1rem
 @media screen and (max-width:576px)
     .container
         max-width: 95vw
@@ -122,6 +124,7 @@
         &-slider
             &__controls
                 bottom: 0
+        
     .reasons
         &-list
                 display: grid
@@ -149,8 +152,6 @@
     .questions
         &-list
             grid-row-gap: 60px
-        &-item
-            font-size: 0.8rem
             &__descr
                 width: 90%
     .contact
@@ -171,12 +172,17 @@
                 width: 95%
             &__title
                 font-size: 1.5rem
+            &__cross
+                top: 10px
+                right: 10px
             &__subt
                 font-size: 0.8rem
             &__btn
                 font-size: 1.2rem
             &__btns
-                grid-column-gap: 10px
+                grid-row-gap: 10px
+                grid-template-columns: 1fr
+                grid-template-rows: repeat(2, 1fr)
     .footer
         padding: 40px 0
         .container

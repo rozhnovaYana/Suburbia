@@ -6,22 +6,22 @@ function slider(
     nextArrow=false, 
     controlsSelector=false,
     indicators=false,
-    bigWrapper=false}) {
+    bigWrapper=false,
+    duration,
+    length}) {
     const sliderWrapper = document.querySelector(wrapper),
         sliderScroll = document.querySelector(container),
         slides = document.querySelectorAll(oneSlide),
         prev = document.querySelector(prevArrow),
         next = document.querySelector(nextArrow),
         controls= document.querySelectorAll(controlsSelector)
-    let width = window.getComputedStyle(sliderWrapper).width;
-    width = Math.floor(width.slice(0, width.length - 2));
-    let scroll = 0,
+    let width = 100/length
+    let direction=1,
     slide=1,
-    dots=[];
+    scroll, 
+    dots=[],
+    firstSlide=1;
     sliderScroll.style.width = 100 * slides.length + `%`;
-    slides.forEach((slide) => {
-        slide.style.width = width;
-    });
     if(indicators){
         const slider = document.querySelector(bigWrapper),
         dotWrapper = document.createElement("ul");
@@ -35,61 +35,80 @@ function slider(
             dot.classList.add("dot");
             dots.push(dot);
             if (i == 0) {
-                dot.style.opacity = "1";
+                dot.style.background = "white";
             }
             dot.setAttribute("data-slide-to", i + 1);
         }
         dots.forEach((dot) => {
             dot.addEventListener("click", (e) => {
                 const activeDot = e.target.getAttribute("data-slide-to");
-                slide = +activeDot;
-                scroll = (activeDot - 1) * width;
-                sliderScroll.style.transform = `translateX(-${scroll}px)`;
+                slide = +activeDot-firstSlide;
+                console.log(slide)
+                scroll = (slide - 1) * width;
+                console.log(scroll)
+                sliderScroll.style.transform = `translateX(-${scroll}%)`;
                 dots.forEach((dot) => {
-                    dot.style.opacity = "0.5";
+                    dot.style.background="inherit";
                 });
-                dot.style.opacity = "1";
+                dot.style.background="white";
 
             });
         });
     }
 
-    
+    sliderScroll.addEventListener('transitionend', function() {
+        // get the last element and append it to the front  
+        if (direction === 1) {
+          sliderScroll.prepend(sliderScroll.lastElementChild);
+          if(firstSlide==0){
+            firstSlide=length-1
+          }else{
+            firstSlide-=1
+          }
+        } else {
+          sliderScroll.append(sliderScroll.firstElementChild);
+          if(firstSlide==length-1){
+              firstSlide=0
+          }else{
+            firstSlide+=1
+          }
+        }
 
-    let maxScroll = (slides.length - 1) * width;
+        
+        sliderScroll.style.transition = 'none';
+        sliderScroll.style.transform = 'translate(0)';
+        setTimeout(() => {
+          sliderScroll.style.transition = 'all 0.5s';
+        })
+      }, false);
+
     function nextSlide(){
-        if (scroll == maxScroll) {
-            scroll = 0;
-        } else {
-            scroll += width;
-        }
-        if (slide == slides.length) {
-            slide = 1;
-        } else {
-            slide += 1;
-        }
+        sliderWrapper.style.justifyContent = 'flex-start';
+        direction=-1
+        scroll+=width
         if(indicators){
             dots.forEach((dot) => {
-                dot.style.opacity = "0.5";
+                dot.style.background="inherit"
             });
-            dots[slide - 1].style.opacity = "1";
+            dots[firstSlide].style.background="white"
         }
-        sliderScroll.style.transform = `translateX(-${scroll}px)`;
+        sliderScroll.style.transform = `translateX(-${width}%)`;
     }
     function prevSlide(){
-        if (scroll == 0) {
-            scroll = maxScroll;
-        } else {
-            scroll -= width;
+        if (direction === -1) {
+            direction = 1;
+            sliderScroll.appendChild(sliderScroll.firstElementChild);
+            if(firstSlide==0){
+                firstSlide=length-1
+              }else{
+                firstSlide-=1
+              }
         }
-        if (slide == 1) {
-            slide = slides.length;
-        } else {
-            slide -= 1;
-        }
-        sliderScroll.style.transform = `translateX(-${scroll}px)`;
+        sliderWrapper.style.justifyContent = 'flex-end';  
+        scroll-=width
+        sliderScroll.style.transform = `translateX(${width}%)`;
     }
-    let interval=setInterval(()=>nextSlide(), 3000)
+    let interval=setInterval(()=>nextSlide(), duration)
     try{
         next.addEventListener("click", () => {
             nextSlide()

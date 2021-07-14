@@ -49,21 +49,6 @@
         grid-template-columns: repeat(2, 1fr)
         grid-row-gap: 30px
         grid-column-gap: 30px
-        button
-            width: 170px;
-            height: 40px
-            max-height: 40px;  
-            background: #FFFFFF;
-            border: 2px solid #FFFFFF;
-            box-sizing: border-box;
-            border-radius: 6px;
-            font-size: 1rem;
-            line-height: 1.2em;
-            text-align: center
-            letter-spacing: 0.04em; 
-            cursor: pointer
-            &::hover
-                background: #535353;
         .contact-title
             grid-column-end: 3
             grid-column-start: 1
@@ -101,7 +86,7 @@
             grid-column-end: 3
             &::before
                 content: "Message*"
-        &#email
+        &#mail
              &::before
                 content: "Email*"
         &#tel
@@ -166,7 +151,7 @@
         position: fixed
         top: 0
         left: 0
-        background: #5353534b
+        background: rgba(0,0,0,0.2)
         display: flex
         justify-content: center
         align-items: center
@@ -183,7 +168,8 @@
             margin-bottom: 40px
         &__subt
             font-size: 1rem
-            line-height: 1.5em
+            font-weight: normal
+            line-height: 1.6em
             text-align: center;
             letter-spacing: 0.04em;
             color: #FFFFFF;
@@ -194,18 +180,14 @@
             grid-column-gap: 40px
         &__btn
             cursor: pointer
-            padding: 10px
-            font-size: 1.5rem
-            line-height: 1.2em
             text-align: center;
             letter-spacing: 0.04em;
-            color: #040404;
         &_active
                 opacity: 1
                 z-index: 20
                 transition: 0.5s all
         &__wrapper
-            width: 700px
+            width: 760px
             height: 384px;
             padding: 80px 90px
             background: #040404
@@ -219,12 +201,26 @@
             flex-direction: column
         &__cross
             position: absolute
-            top: 10px
-            right: 10px
-            font-weight: 400;
-            font-size: 1.8rem
-            color: #FFFFFF;
+            top: 30px
+            right: 30px
+            width: 30px
+            height: 30px
             cursor: pointer
+            display: flex
+            justify-content: center
+            align-items: center
+            flex-direction: column
+            span
+                width: 100%
+                height: 1px
+                background: white
+                display: block
+                &:nth-child(1)
+                    transform: rotate(45deg)
+                    margin-top: 5px
+                &:nth-child(2)
+                    margin-top: -1px
+                    transform: rotate(-45deg)
         &__text
             font-weight: 800;
             font-size: 1.8rem
@@ -263,15 +259,10 @@
     filter: drop-shadow(0px 0px 30px rgba(255, 255, 255, 0.1));
     border-radius: 6px;
     color: white
+    background: inherit
 
 #download
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: black
-  
+    
 
 
 

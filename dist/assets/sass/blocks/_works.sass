@@ -2,13 +2,18 @@
     &-slider
         width: 100%
         height: 100vh
-        margin-top: 60px
+        margin-top: 20px
         position: relative
         overflow-x: hidden
+        display: flex;
+        justify-content: flex-start;
         &__wrapper
             display: flex
             height: 100%
-            transition: 0.8s all
+            transition: 0.5s all
+            flex-shrink: 0;
+            
+
             
         &__controls
             position: absolute
@@ -21,12 +26,16 @@
     &-slide
         width: 100%
         position: relative
-        &:nth-child(1)
-            background: url("../img/works/metaplace.png") center center/cover no-repeat
-        &:nth-child(2)
-            background: url("../img/works/house.png") center center/cover no-repeat
-        &:nth-child(3)
-            background: url("../img/works/marq.png") center center/cover no-repeat
+        &__img
+            position: absolute
+            top: 0
+            height: 0
+            height: 100%
+            width: 100%
+            img
+                width: 100%
+                height: 100%
+                
         &__title
             position: absolute
             font-style: normal

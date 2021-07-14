@@ -2,12 +2,25 @@
     background: url("../img/promo/bg.png") center center/cover no-repeat
     min-height: 100vh
     max-height: auto
+    position: relative
+    display: flex
+    align-items: center
+    &-inner
+         width: 1140px
+   
     &-header
         width: 100%
-        display: flex
-        justify-content: space-between
-        padding: 20px 0
-        align-items: center
+        position: fixed
+        top: 0
+        left: 0
+        background: linear-gradient(180deg, rgba(4, 4, 4, 0.6) 0%, rgba(4, 4, 4, 0) 100%);
+        opacity: 0.7;
+        height: 75px
+        .container
+            display: flex
+            justify-content: space-between
+            padding: 20px 0
+            align-items: center
         &__contact
             font-style: normal
             font-weight: normal
@@ -32,7 +45,6 @@
         letter-spacing: 0.08em;
         text-transform: capitalize;
         color: #FFFFFF;
-        margin-top: 15%
     h3
         font-style: normal;
         font-weight: normal;
