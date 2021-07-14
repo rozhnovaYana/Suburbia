@@ -25,7 +25,6 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "intl-tel-input": "^17.0.13",
     "jquery": "^3.6.0",
     "slick-carousel": "^1.8.1",
     "slider-carousel": "^1.1.1"
