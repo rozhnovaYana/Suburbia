@@ -7,14 +7,14 @@
         text-align: center;
         letter-spacing: 0.04em;
         color: #FEF8EE;
-        margin-bottom: 60px
+        margin-bottom: 50px
         width: 80%
         margin: 0 auto 60px
         &_fs18
             font-size: 1.1rem
     &-video
         position: relative
-        margin-bottom: 80px
+        margin-bottom: 50px
         video
             width: 100%
         &__control
@@ -37,9 +37,13 @@
         flex-direction: column
         align-items: center
         &__img
+            cursor: pointer
+            &:hover
+                img
+                    filter: grayscale(0%)
             img
-                &::hover
-                    filter: contrast(0.1)
+                transition: 0.5s all
+                filter: grayscale(100%)
         &__name
             margin-top: 30px
             font-weight: 800;
